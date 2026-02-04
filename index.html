@@ -1,127 +1,53 @@
-<!DOCTYPE html>
-<html lang="si">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>සිරි සාරි | Premium Saree Collection</title>
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700;800&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
-    <style>
-        /* ඔබ ලබා දුන් සියලුම CSS විලාසිතා (Styles) මෙතැන තිබිය යුතුය */
-        :root {
-            --primary: #8B4513; --primary-dark: #5D2E0F; --accent: #D4AF37;
-            --accent-light: #F4E4C1; --text-dark: #2C1810; --text-medium: #6B4423;
-            --bg-cream: #FAF6F0; --bg-white: #FFFFFF; --border-color: #E8DCC8;
-            --shadow: rgba(139, 69, 19, 0.1);
-        }
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Lato', sans-serif; background: var(--bg-cream); color: var(--text-dark); line-height: 1.6; }
-        
-        /* Header, Hero සහ අනෙකුත් Styles පෙර පරිදිම පවතී */
-        header { background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%); color: white; position: sticky; top: 0; z-index: 1000; }
-        .header-main { display: flex; justify-content: space-between; align-items: center; padding: 20px 5%; max-width: 1400px; margin: 0 auto; }
-        .logo { font-family: 'Playfair Display', serif; font-size: 2.5rem; font-weight: 700; background: linear-gradient(135deg, var(--accent) 0%, var(--accent-light) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        nav ul { list-style: none; display: flex; gap: 30px; }
-        nav a { color: white; text-decoration: none; font-size: 0.9rem; text-transform: uppercase; }
-        
-        .hero { background: linear-gradient(rgba(139, 69, 19, 0.7), rgba(93, 46, 15, 0.8)); padding: 80px 5%; text-align: center; color: white; }
-        .container { max-width: 1400px; margin: 0 auto; padding: 40px 5%; }
-        
-        .product-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 30px; }
-        .product-card { background: var(--bg-white); border-radius: 15px; overflow: hidden; box-shadow: 0 4px 15px var(--shadow); transition: 0.4s; }
-        .product-card:hover { transform: translateY(-10px); }
-        .product-image img { width: 100%; height: 350px; object-fit: cover; }
-        .product-info { padding: 20px; }
-        .product-name { font-family: 'Cormorant Garamond', serif; font-size: 1.4rem; color: var(--primary-dark); font-weight: 600; }
-        .price { font-size: 1.6rem; color: var(--primary); font-weight: 700; margin: 10px 0; }
-        .add-to-cart-btn { width: 100%; background: var(--primary); color: white; border: none; padding: 12px; border-radius: 8px; cursor: pointer; }
-    </style>
-</head>
-<body>
+<script>
+    const sheetID = '1YNPAC7OCg47t-OBKaG91_q39qGU6MePatB8uL-rLVFg';
+    // දත්ත කෙලින්ම CSV විදිහට ගමු, එතකොට null ප්‍රශ්නය එන්නේ නැහැ
+    const base = `https://docs.google.com/spreadsheets/d/${sheetID}/gviz/tq?tqx=out:csv`;
 
-    <header>
-        <div class="header-main">
-            <div class="logo">සිරි සාරි</div>
-            <nav>
-                <ul>
-                    <li><a href="#">මුල් පිටුව</a></li>
-                    <li><a href="#shop">එකතුව</a></li>
-                    <li><a href="#">අප අමතන්න</a></li>
-                </ul>
-            </nav>
-        </div>
-    </header>
+    function fetchProducts() {
+        fetch(base)
+            .then(res => res.text())
+            .then(csvText => {
+                // CSV දත්ත පේළි වලට වෙන් කිරීම
+                const rows = csvText.split('\n').map(row => row.split('","').map(cell => cell.replace(/"/g, '')));
+                const grid = document.getElementById('productGrid');
+                grid.innerHTML = ''; 
 
-    <section class="hero">
-        <h1>අපූරු සාරි එකතුව</h1>
-        <p>ගූගල් ශීට් එකෙන් සජීවීව යාවත්කාලීන වන නවතම විලාසිතා</p>
-    </section>
-
-    <div class="container">
-        <div class="products-header">
-            <h2>අපගේ එකතුව</h2>
-        </div>
-
-        <div class="product-grid" id="productGrid">
-            <p style="text-align: center; grid-column: 1/-1;">සාරි එකතුව පූරණය වෙමින් පවතී...</p>
-        </div>
-    </div>
-
-    <script>
-        // ඔබේ Google Sheet ID එක
-        const sheetID = '1YNPAC7OCg47t-OBKaG91_q39qGU6MePatB8uL-rLVFg';
-        const base = `https://docs.google.com/spreadsheets/d/${sheetID}/gviz/tq?tqx=out:json`;
-
-        function fetchProducts() {
-            fetch(base)
-                .then(res => res.text())
-                .then(data => {
-                    // Google Sheet JSON පිරිසිදු කිරීම
-                    const temp = data.substring(47).slice(0, -2);
-                    const json = JSON.parse(temp);
-                    const rows = json.table.rows;
-                    const grid = document.getElementById('productGrid');
+                // පළමු පේළිය Header නිසා 1 වෙනි පේළියේ සිට පටන් ගමු
+                for (let i = 1; i < rows.length; i++) {
+                    const row = rows[i];
                     
-                    grid.innerHTML = ''; // Loading message එක අයින් කරන්න
+                    // ඔබේ Sheet එකේ පිළිවෙළ: A=Name, B=Price, C=ImageURL නම්:
+                    const name = row[0] || "No Name";
+                    const price = row[1] || "0.00";
+                    const img = row[2] || "";
 
-                    rows.forEach(row => {
-                        // Sheet එකේ Columns: A=Name, B=Category, C=Price, D=ImageURL, E=Description
-                        const name = row.c[0] ? row.c[0].v : "නමක් නොමැත";
-                        const category = row.c[1] ? row.c[1].v : "Saree";
-                        const price = row.c[2] ? row.c[2].v : "0";
-                        const img = row.c[3] ? row.c[3].v : "https://via.placeholder.com/350";
-                        const desc = row.c[4] ? row.c[4].v : "";
-
+                    if (img.trim() !== "") {
                         grid.innerHTML += `
                             <div class="product-card">
                                 <div class="product-image">
-                                    <img src="${img}" alt="${name}">
+                                    <img src="${img}" alt="${name}" onerror="this.src='https://via.placeholder.com/350?text=Image+Not+Found'">
                                 </div>
                                 <div class="product-info">
-                                    <div class="product-category">${category}</div>
                                     <h3 class="product-name">${name}</h3>
-                                    <p class="product-description">${desc}</p>
                                     <div class="price">රු. ${price}</div>
                                     <button class="add-to-cart-btn" onclick="orderWhatsApp('${name}', '${price}')">WhatsApp හරහා ඇණවුම් කරන්න</button>
                                 </div>
                             </div>
                         `;
-                    });
-                })
-                .catch(err => {
-                    console.error("Error fetching sheet:", err);
-                    document.getElementById('productGrid').innerHTML = "දත්ත ලබා ගැනීමේ දෝෂයකි. කරුණාකර Sheet එක 'Anyone with the link' ලෙස Share කර ඇත්දැයි බලන්න.";
-                });
-        }
+                    }
+                }
+            })
+            .catch(err => {
+                console.error("Error:", err);
+                document.getElementById('productGrid').innerHTML = "Sheet එක සම්බන්ධ කළ නොහැක. Share settings පරීක්ෂා කරන්න.";
+            });
+    }
 
-        // WhatsApp ඇණවුම් කිරීමේ function එක
-        function orderWhatsApp(name, price) {
-            const phone = "94771234567"; // ඔබේ WhatsApp අංකය මෙතැනට දමන්න
-            const message = `ආයුබෝවන්! මට මෙම සාරිය ඇණවුම් කිරීමට අවශ්‍යයි:%0Aසාරිය: ${name}%0Aමිල: රු. ${price}`;
-            window.open(`https://wa.me/${phone}?text=${message}`, '_blank');
-        }
+    function orderWhatsApp(name, price) {
+        const phone = "94771234567"; 
+        const message = `ආයුබෝවන්! මට මෙම සාරිය ඇණවුම් කිරීමට අවශ්‍යයි:%0Aසාරිය: ${name}%0Aමිල: රු. ${price}`;
+        window.open(`https://wa.me/${phone}?text=${message}`, '_blank');
+    }
 
-        // පිටුව පූරණය වන විට ශීට් එකෙන් දත්ත ගන්න
-        window.onload = fetchProducts;
-    </script>
-</body>
-</html>
+    window.onload = fetchProducts;
+</script>
