@@ -18,7 +18,71 @@
             --border-color: #E8DCC8;
             --shadow: rgba(139, 69, 19, 0.1);
         }
+<script>
+    // 1. Google Sheets සම්බන්ධතාවය
+    // මෙහි "YOUR_SHEET_ID" වෙනුවට ඔබේ Google Sheet ID එක ඇතුළත් කරන්න
+    const SHEET_ID = 'YOUR_SHEET_ID';
+    const CSV_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/export?format=csv`;
 
+    let allProducts = [];
+
+    // 2. දත්ත ලබාගැනීම (Fetch Data)
+    async function fetchInventory() {
+        try {
+            const response = await fetch(CSV_URL);
+            const data = await response.text();
+            allProducts = parseCSV(data);
+            displayProducts(allProducts);
+        } catch (error) {
+            console.error("දත්ත ලබාගැනීමේ දෝෂයකි:", error);
+            document.getElementById('productGrid').innerHTML = "දත්ත ලබාගැනීමට නොහැකි විය. කරුණාකර නැවත උත්සාහ කරන්න.";
+        }
+    }
+
+    // CSV දත්ත සකස් කිරීම
+    function parseCSV(csv) {
+        const rows = csv.split('\n').slice(1); // ශීර්ෂය ඉවත් කිරීම
+        return rows.map(row => {
+            const cols = row.split(',');
+            return {
+                name: cols[0],
+                category: cols[1],
+                price: parseFloat(cols[2]),
+                originalPrice: cols[3],
+                image: cols[4],
+                badge: cols[5]
+            };
+        }).filter(p => p.name);
+    }
+
+    // 3. භාණ්ඩ ප්‍රදර්ශනය කිරීම
+    function displayProducts(products) {
+        const grid = document.getElementById('productGrid');
+        grid.innerHTML = products.map(p => `
+            <div class="product-card">
+                <div class="product-image-container">
+                    <div class="product-image">${p.image || '🥻'}</div>
+                    ${p.badge ? `<div class="product-badge">${p.badge}</div>` : ''}
+                </div>
+                <div class="product-info">
+                    <div class="product-category">${p.category}</div>
+                    <div class="product-name">${p.name}</div>
+                    <div class="product-price">
+                        <span class="price">රු. ${p.price.toLocaleString()}</span>
+                    </div>
+                    <button class="add-to-cart-btn">කරත්තයට එක් කරන්න</button>
+                </div>
+            </div>
+        `).join('');
+    }
+
+    // Admin Panel විවෘත කිරීම සහ වැසීම
+    function openAdmin() { document.getElementById('adminPopup').classList.add('active'); }
+    function closeAdmin() { document.getElementById('adminPopup').classList.remove('active'); }
+
+    // පිටුව Load වන විට ක්‍රියාත්මක වීම
+    window.onload = fetchInventory;
+</script>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: 'Lato', sans-serif; background: var(--bg-cream); color: var(--text-dark); }
 
