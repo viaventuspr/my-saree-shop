@@ -4,55 +4,819 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>සිරි සාරි | Premium Saree Collection</title>
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600&family=Playfair+Display:wght@700&family=Lato:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700;800&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
         :root {
-            --primary: #8B4513;
-            --primary-dark: #5D2E0F;
-            --accent: #D4AF37;
-            --text-dark: #2C1810;
-            --bg-cream: #FAF6F0;
+            --primary: #964B00; /* Darker Brown */
+            --primary-light: #C07C3D;
+            --accent: #DAA520; /* Goldenrod */
+            --text-dark: #3A2315;
+            --text-light: #705844;
+            --bg-light: #FDF9F5;
             --bg-white: #FFFFFF;
+            --border-color: #E0D3C4;
+            --shadow-light: rgba(0,0,0,0.08);
+            --shadow-medium: rgba(0,0,0,0.15);
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Lato', sans-serif; background: var(--bg-cream); color: var(--text-dark); }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Lato', sans-serif;
+            background: var(--bg-light);
+            color: var(--text-dark);
+            line-height: 1.6;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
 
         /* Header */
         header {
-            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
-            color: white;
-            padding: 15px 5%;
+            background-color: var(--bg-white);
+            box-shadow: 0 2px 8px var(--shadow-light);
+            padding: 15px 0;
             position: sticky;
             top: 0;
             z-index: 1000;
+        }
+
+        .header-content {
+            max-width: 1300px;
+            margin: 0 auto;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            padding: 0 20px;
         }
 
-        .logo { font-family: 'Playfair Display', serif; font-size: 2rem; color: var(--accent); }
+        .logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: var(--primary);
+            letter-spacing: 1px;
+        }
 
-        nav ul { list-style: none; display: flex; gap: 20px; }
-        nav a { color: white; text-decoration: none; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px; }
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 30px;
+        }
 
-        /* Hero Section */
-        .hero {
-            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://images.unsplash.com/photo-1610030469983-98e550d6193c?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');
+        nav a {
+            font-size: 1rem;
+            font-weight: 500;
+            color: var(--text-dark);
+            position: relative;
+            transition: color 0.3s;
+        }
+
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--accent);
+            transition: width 0.3s ease;
+        }
+
+        nav a:hover::after {
+            width: 100%;
+        }
+
+        .header-icons {
+            display: flex;
+            gap: 20px;
+        }
+
+        .header-icons i {
+            font-size: 1.3rem;
+            color: var(--text-light);
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+
+        .header-icons i:hover {
+            color: var(--primary);
+        }
+
+        /* Hero Section (Collection Banner) */
+        .hero-banner {
+            background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('https://images.unsplash.com/photo-1627705193077-e6f76020c6a8?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80');
             background-size: cover;
             background-position: center;
-            height: 400px;
+            height: 250px;
             display: flex;
-            flex-direction: column;
-            justify-content: center;
             align-items: center;
+            justify-content: center;
             color: white;
             text-align: center;
-            padding: 20px;
         }
 
-        .hero h1 { font-family: 'Playfair Display', serif; font-size: 3.5rem; margin-bottom: 10px; }
+        .hero-banner h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 3rem;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+        }
 
-        /* Product Grid */
-        .container { max-width: 1200px; margin: 40px
+        /* Main Content Layout */
+        .collection-main {
+            display: grid;
+            grid-template-columns: 280px 1fr; /* Sidebar width and main content */
+            gap: 40px;
+            max-width: 1300px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        /* Sidebar Filters */
+        .sidebar-filters {
+            background-color: var(--bg-white);
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px var(--shadow-light);
+        }
+
+        .filter-group {
+            margin-bottom: 30px;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 25px;
+        }
+
+        .filter-group:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+            margin-bottom: 0;
+        }
+
+        .filter-group h3 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.4rem;
+            color: var(--primary);
+            margin-bottom: 15px;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 10px;
+        }
+
+        .filter-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 0.95rem;
+            color: var(--text-light);
+        }
+
+        .filter-group select,
+        .filter-group input[type="range"] {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid var(--border-color);
+            border-radius: 5px;
+            background-color: var(--bg-light);
+            font-size: 0.95rem;
+            color: var(--text-dark);
+        }
+
+        .price-range-display {
+            font-size: 0.95rem;
+            color: var(--text-dark);
+            margin-top: 10px;
+            text-align: center;
+            font-weight: 600;
+        }
+
+        .color-options {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .color-box {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            border: 2px solid var(--border-color);
+            cursor: pointer;
+            transition: all 0.2s ease-in-out;
+        }
+
+        .color-box.selected {
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px var(--accent);
+            transform: scale(1.1);
+        }
+
+        /* Product Listing */
+        .product-listing {
+            background-color: var(--bg-white);
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px var(--shadow-light);
+        }
+
+        .listing-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 20px;
+        }
+
+        .listing-header h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            color: var(--primary);
+        }
+
+        .sort-options {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 0.95rem;
+        }
+
+        .sort-options select {
+            padding: 8px 12px;
+            border: 1px solid var(--border-color);
+            border-radius: 5px;
+            background-color: var(--bg-light);
+            color: var(--text-dark);
+            cursor: pointer;
+        }
+
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 30px;
+        }
+
+        .product-card {
+            background-color: var(--bg-white);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+            cursor: pointer;
+        }
+
+        .product-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+        }
+
+        .product-image-wrapper {
+            width: 100%;
+            height: 300px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .product-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .product-card:hover .product-image {
+            transform: scale(1.08);
+        }
+
+        .product-badge {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            background-color: var(--accent);
+            color: var(--text-dark);
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+
+        .product-info {
+            padding: 20px;
+            text-align: center;
+        }
+
+        .product-category {
+            font-size: 0.85rem;
+            color: var(--text-light);
+            text-transform: uppercase;
+            margin-bottom: 5px;
+        }
+
+        .product-name {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.3rem;
+            color: var(--primary);
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+
+        .price-display {
+            display: flex;
+            justify-content: center;
+            align-items: baseline;
+            gap: 8px;
+            margin-bottom: 15px;
+        }
+
+        .current-price {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .original-price {
+            font-size: 1rem;
+            color: var(--text-light);
+            text-decoration: line-through;
+        }
+
+        .add-to-cart-btn {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.95rem;
+            font-weight: 600;
+            transition: background-color 0.3s ease;
+            width: 100%;
+        }
+
+        .add-to-cart-btn:hover {
+            background-color: var(--primary-light);
+        }
+
+        /* Pagination */
+        .pagination {
+            display: flex;
+            justify-content: center;
+            margin-top: 40px;
+            gap: 10px;
+        }
+
+        .page-btn {
+            background-color: var(--bg-white);
+            border: 1px solid var(--border-color);
+            color: var(--text-dark);
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .page-btn.active,
+        .page-btn:hover {
+            background-color: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
+        /* Quick View Modal */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.6);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease;
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .quick-view-modal {
+            background-color: var(--bg-white);
+            border-radius: 10px;
+            box-shadow: 0 5px 20px var(--shadow-medium);
+            max-width: 900px;
+            width: 90%;
+            display: grid;
+            grid-template-columns: 1fr 1.5fr;
+            gap: 30px;
+            padding: 30px;
+            position: relative;
+            transform: translateY(20px);
+            opacity: 0;
+            transition: transform 0.3s ease, opacity 0.3s ease;
+        }
+
+        .modal-overlay.active .quick-view-modal {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        .modal-close-btn {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: none;
+            border: none;
+            font-size: 1.8rem;
+            color: var(--text-light);
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+
+        .modal-close-btn:hover {
+            color: var(--primary);
+        }
+
+        .modal-image img {
+            width: 100%;
+            height: 400px;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+
+        .modal-details h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.2rem;
+            color: var(--primary);
+            margin-bottom: 10px;
+        }
+
+        .modal-details .category {
+            font-size: 0.9rem;
+            color: var(--text-light);
+            text-transform: uppercase;
+            margin-bottom: 15px;
+        }
+
+        .modal-details .price-display {
+            justify-content: flex-start;
+            margin-bottom: 20px;
+        }
+
+        .modal-details .description {
+            font-size: 1rem;
+            color: var(--text-dark);
+            line-height: 1.8;
+            margin-bottom: 25px;
+        }
+
+        .modal-details .whatsapp-order-btn {
+            background-color: #25D366; /* WhatsApp Green */
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .modal-details .whatsapp-order-btn:hover {
+            background-color: #1DA851;
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--text-dark);
+            color: var(--bg-light);
+            padding: 50px 20px;
+            text-align: center;
+            margin-top: 60px;
+        }
+
+        /* Responsive Adjustments */
+        @media (max-width: 1024px) {
+            .collection-main {
+                grid-template-columns: 1fr; /* Stack sidebar and products */
+                gap: 30px;
+            }
+            .sidebar-filters {
+                padding: 20px;
+            }
+            .product-listing {
+                padding: 20px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 15px;
+            }
+            nav ul {
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 20px;
+            }
+            .hero-banner h1 {
+                font-size: 2.2rem;
+            }
+            .quick-view-modal {
+                grid-template-columns: 1fr;
+                gap: 20px;
+                padding: 20px;
+            }
+            .modal-image img {
+                height: 300px;
+            }
+            .modal-details h3 {
+                font-size: 1.8rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .logo {
+                font-size: 1.8rem;
+            }
+            .product-grid {
+                grid-template-columns: 1fr;
+            }
+            .listing-header {
+                flex-direction: column;
+                gap: 15px;
+                align-items: flex-start;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="header-content">
+            <a href="#" class="logo">සිරි සාරි</a>
+            <nav>
+                <ul>
+                    <li><a href="#">මුල් පිටුව</a></li>
+                    <li><a href="#collection-section">එකතුව</a></li>
+                    <li><a href="#">අප ගැන</a></li>
+                    <li><a href="#">අප අමතන්න</a></li>
+                </ul>
+            </nav>
+            <div class="header-icons">
+                <i class="fas fa-search"></i>
+                <i class="fas fa-user"></i>
+                <i class="fas fa-shopping-cart"></i>
+            </div>
+        </div>
+    </header>
+
+    <section class="hero-banner">
+        <h1>සුවිශේෂී සාරි එකතුව</h1>
+    </section>
+
+    <div class="collection-main" id="collection-section">
+        <aside class="sidebar-filters">
+            <div class="filter-group">
+                <h3>මිල අනුව පෙරහන් කරන්න</h3>
+                <input type="range" id="priceRange" min="0" max="50000" value="50000" oninput="updatePriceFilter()">
+                <div class="price-range-display">රු. 0 - <span id="currentPrice">50,000</span></div>
+            </div>
+
+            <div class="filter-group">
+                <h3>කාණ්ඩය</h3>
+                <select id="categoryFilter" onchange="filterAndPaginate()">
+                    <option value="all">සියල්ල</option>
+                    </select>
+            </div>
+
+            <div class="filter-group">
+                <h3>වර්ණය</h3>
+                <div class="color-options" id="colorOptions">
+                    </div>
+            </div>
+
+            <div class="filter-group">
+                <h3>සෙවීම</h3>
+                <input type="text" id="searchInput" placeholder="සාරි සොයන්න..." oninput="filterAndPaginate()">
+            </div>
+        </aside>
+
+        <main class="product-listing">
+            <div class="listing-header">
+                <h2 id="productCountDisplay">සාරි (0)</h2>
+                <div class="sort-options">
+                    <label for="sortBy">පිළිවෙළ කරන්න:</label>
+                    <select id="sortBy" onchange="filterAndPaginate()">
+                        <option value="default">පෙරනිමි</option>
+                        <option value="price-asc">මිල: අඩු සිට ඉහළ</option>
+                        <option value="price-desc">මිල: ඉහළ සිට අඩු</option>
+                        <option value="name-asc">නම: A-Z</option>
+                        <option value="name-desc">නම: Z-A</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="product-grid" id="productGrid">
+                <p style="grid-column: 1/-1; text-align: center; font-size: 1.1rem; color: var(--text-light);">නිෂ්පාදන පූරණය වෙමින් පවතී...</p>
+            </div>
+
+            <div class="pagination" id="pagination">
+                </div>
+        </main>
+    </div>
+
+    <div class="modal-overlay" id="quickViewModalOverlay">
+        <div class="quick-view-modal" id="quickViewModal">
+            <button class="modal-close-btn" onclick="closeQuickView()">&times;</button>
+            <div class="modal-image">
+                <img id="modalProductImage" src="" alt="Product Image">
+            </div>
+            <div class="modal-details">
+                <p class="category" id="modalProductCategory"></p>
+                <h3 id="modalProductName"></h3>
+                <div class="price-display">
+                    <span class="current-price" id="modalCurrentPrice"></span>
+                    <span class="original-price" id="modalOriginalPrice"></span>
+                </div>
+                <p class="description" id="modalProductDescription"></p>
+                <button class="whatsapp-order-btn" id="modalWhatsAppBtn">
+                    <i class="fab fa-whatsapp"></i> WhatsApp හරහා ඇණවුම් කරන්න
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2026 සිරි සාරි. සියලුම හිමිකම් ඇවිරිණි.</p>
+    </footer>
+
+    <script>
+        const SHEET_ID = '1YNPAC7OCg47t-OBKaG91_q39qGU6MePatB8uL-rLVFg';
+        const SHEET_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:csv`;
+        const WHATSAPP_PHONE = '94771234567'; // ඔබේ WhatsApp අංකය
+
+        let allProducts = [];
+        let filteredAndSortedProducts = [];
+        let currentPage = 1;
+        const productsPerPage = 9; // එක් පිටුවක පෙන්වන භාණ්ඩ ගණන
+
+        // ======================= DATA LOADING =======================
+        async function loadProducts() {
+            try {
+                const response = await fetch(SHEET_URL);
+                const csvText = await response.text();
+                parseCSV(csvText);
+                populateFilters();
+                filterAndPaginate(); // Initial display
+            } catch (error) {
+                console.error("Error loading products:", error);
+                document.getElementById('productGrid').innerHTML = `<p style="grid-column: 1/-1; text-align: center; color: red;">දත්ත පූරණය කිරීමේදී දෝෂයක් සිදුවිය. කරුණාකර Google Sheet එකේ "Share" සහ "Publish to web" සැකසුම් පරීක්ෂා කරන්න.</p>`;
+            } finally {
+                document.querySelector('.product-grid p').style.display = 'none'; // Remove loading text
+            }
+        }
+
+        function parseCSV(csvText) {
+            const rows = csvText.split('\n');
+            const headers = rows[0].split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/).map(h => h.replace(/"/g, '').trim()); // Clean headers
+
+            allProducts = rows.slice(1).map(row => {
+                const columns = row.split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/);
+                let product = {};
+                headers.forEach((header, index) => {
+                    let value = columns[index] ? columns[index].replace(/"/g, '').trim() : '';
+                    if (header === 'Price' || header === 'OriginalPrice') {
+                        product[header] = parseFloat(value) || 0;
+                    } else if (header === 'Colors') {
+                        product[header] = value ? value.split(',').map(c => c.trim()) : [];
+                    } else {
+                        product[header] = value;
+                    }
+                });
+                return product;
+            }).filter(p => p.ImageURL); // Only include products with an image
+        }
+
+        // ======================= FILTER & SORT LOGIC =======================
+        function populateFilters() {
+            const categories = [...new Set(allProducts.map(p => p.Category))].filter(Boolean);
+            const categoryFilter = document.getElementById('categoryFilter');
+            categories.forEach(cat => {
+                const option = document.createElement('option');
+                option.value = cat;
+                option.textContent = cat;
+                categoryFilter.appendChild(option);
+            });
+
+            const colors = [...new Set(allProducts.flatMap(p => p.Colors))].filter(Boolean);
+            const colorOptions = document.getElementById('colorOptions');
+            colors.forEach(color => {
+                const colorBox = document.createElement('div');
+                colorBox.className = 'color-box';
+                colorBox.style.backgroundColor = color.toLowerCase(); // Use actual color name for background
+                colorBox.setAttribute('data-color', color);
+                colorBox.onclick = () => selectColor(colorBox);
+                colorOptions.appendChild(colorBox);
+            });
+        }
+
+        function updatePriceFilter() {
+            const priceRangeInput = document.getElementById('priceRange');
+            const currentPriceDisplay = document.getElementById('currentPrice');
+            currentPriceDisplay.textContent = priceRangeInput.value.toLocaleString();
+            filterAndPaginate();
+        }
+
+        function selectColor(selectedBox) {
+            document.querySelectorAll('.color-box').forEach(box => box.classList.remove('selected'));
+            selectedBox.classList.add('selected');
+            filterAndPaginate();
+        }
+
+        function getSelectedColor() {
+            const selectedColorBox = document.querySelector('.color-box.selected');
+            return selectedColorBox ? selectedColorBox.getAttribute('data-color') : 'all';
+        }
+
+        function filterAndPaginate() {
+            let tempProducts = [...allProducts];
+
+            // 1. Apply Filters
+            const category = document.getElementById('categoryFilter').value;
+            const maxPrice = parseFloat(document.getElementById('priceRange').value);
+            const searchInput = document.getElementById('searchInput').value.toLowerCase();
+            const selectedColor = getSelectedColor();
+
+            if (category !== 'all') {
+                tempProducts = tempProducts.filter(p => p.Category === category);
+            }
+            tempProducts = tempProducts.filter(p => p.Price <= maxPrice);
+
+            if (searchInput) {
+                tempProducts = tempProducts.filter(p => 
+                    p.Name.toLowerCase().includes(searchInput) ||
+                    p.Description.toLowerCase().includes(searchInput) ||
+                    p.Category.toLowerCase().includes(searchInput)
+                );
+            }
+
+            if (selectedColor !== 'all') {
+                tempProducts = tempProducts.filter(p => p.Colors && p.Colors.includes(selectedColor));
+            }
+
+            // 2. Apply Sorting
+            const sortBy = document.getElementById('sortBy').value;
+            tempProducts.sort((a, b) => {
+                if (sortBy === 'price-asc') return a.Price - b.Price;
+                if (sortBy === 'price-desc') return b.Price - a.Price;
+                if (sortBy === 'name-asc') return a.Name.localeCompare(b.Name);
+                if (sortBy === 'name-desc') return b.Name.localeCompare(a.Name);
+                return 0; // default
+            });
+
+            filteredAndSortedProducts = tempProducts;
+            document.getElementById('productCountDisplay').textContent = `සාරි (${filteredAndSortedProducts.length})`;
+
+            // 3. Apply Pagination
+            currentPage = 1; // Reset to first page after filtering/sorting
+            displayProducts();
+            renderPagination();
+        }
+
+        function displayProducts() {
+            const productGrid = document.getElementById('productGrid');
+            productGrid.innerHTML = '';
+
+            const startIndex = (currentPage - 1) * productsPerPage;
+            const endIndex = startIndex + productsPerPage;
+            const productsToDisplay = filteredAndSortedProducts.slice(startIndex, endIndex);
+
+            if (productsToDisplay.length === 0) {
+                productGrid.innerHTML = `<p style="grid-column: 1/-1; text-align: center; font-size: 1.2rem; color: var(--text-light);">ඔබගේ තේරීමට ගැලපෙන සාරි නොමැත.</p>`;
+                return;
+            }
+
+            productsToDisplay.forEach(product => {
+                const discountClass = product.OriginalPrice && product.OriginalPrice > product.Price ? 'has-discount' : '';
+                const card = `
+                    <div class="product-card" onclick="openQuickView(${product.id})">
+                        <div class="product-image-wrapper">
+                            <img src="${product.ImageURL}" class="product-image" alt="${product.Name}" onerror="this.src='https://via.placeholder.com/350?text=No+Image'">
+                            ${product.Badge ? `<span class="product-badge">${product.Badge}</span>` : ''}
+                        </div>
