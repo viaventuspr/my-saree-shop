@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>සිරි සාරි | Premium Saree Collection</title>
-    <meta name="description" content="ශ්‍රී ලංකාවේ ප්‍රමුඛතම සාරි එකතුව - සම්ප්‍රදායික සහ නවීන සාරි">
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700;800&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+    <title>සිරි සාරි | ශ්‍රී ලංකාවේ ප්‍රමුඛතම සාරි එකතුව</title>
+    <meta name="description" content="Kanchipuram, Banarasi, Cotton සහ තවත් බොහෝ සාරි විශාල එකතුවක්. නොමිලේ බෙදාහැරීම. Google Sheets වලින් manage කරන්න.">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700;800&family=Lato:wght@300;400;700;900&display=swap" rel="stylesheet">
     <style>
         :root {
             --primary: #8B4513;
@@ -37,45 +37,66 @@
             line-height: 1.6;
         }
 
-        /* Header */
-        header {
-            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
-            color: white;
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-            box-shadow: 0 4px 20px var(--shadow);
-        }
-
+        /* Top Bar */
         .top-bar {
-            background: rgba(0, 0, 0, 0.2);
-            padding: 8px 0;
+            background: var(--primary-dark);
+            color: white;
+            padding: 10px 0;
             font-size: 0.85rem;
             text-align: center;
+        }
+
+        .top-bar-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 5%;
         }
 
         .top-bar a {
             color: var(--accent-light);
             text-decoration: none;
             margin: 0 15px;
+            transition: color 0.3s;
+        }
+
+        .top-bar a:hover {
+            color: var(--accent);
+        }
+
+        /* Header */
+        header {
+            background: white;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px var(--shadow);
         }
 
         .header-main {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px 5%;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 20px 5%;
-            max-width: 1400px;
-            margin: 0 auto;
         }
 
         .logo {
             font-family: 'Playfair Display', serif;
             font-size: 2.5rem;
             font-weight: 700;
-            background: linear-gradient(135deg, var(--accent) 0%, var(--accent-light) 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            color: var(--primary);
+            letter-spacing: 2px;
+        }
+
+        /* Navigation */
+        nav {
+            flex: 1;
+            display: flex;
+            justify-content: center;
         }
 
         nav ul {
@@ -84,64 +105,202 @@
             gap: 30px;
         }
 
+        nav > ul > li {
+            position: relative;
+        }
+
         nav a {
-            color: white;
+            color: var(--text-dark);
             text-decoration: none;
+            font-weight: 500;
             text-transform: uppercase;
             font-size: 0.9rem;
+            letter-spacing: 0.5px;
             transition: color 0.3s;
+            display: block;
+            padding: 10px 0;
         }
 
         nav a:hover {
-            color: var(--accent);
+            color: var(--primary);
         }
 
+        /* Mega Menu */
+        .mega-menu {
+            position: absolute;
+            top: 100%;
+            left: -100px;
+            background: white;
+            min-width: 600px;
+            padding: 30px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.15);
+            display: none;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            border-top: 3px solid var(--primary);
+        }
+
+        nav li:hover .mega-menu {
+            display: grid;
+        }
+
+        .mega-menu-column h4 {
+            font-family: 'Playfair Display', serif;
+            color: var(--primary);
+            margin-bottom: 15px;
+            font-size: 1.1rem;
+        }
+
+        .mega-menu-column ul {
+            list-style: none;
+        }
+
+        .mega-menu-column li {
+            margin-bottom: 10px;
+        }
+
+        .mega-menu-column a {
+            color: var(--text-medium);
+            font-size: 0.9rem;
+            text-transform: none;
+            padding: 5px 0;
+        }
+
+        .mega-menu-column a:hover {
+            color: var(--primary);
+            padding-left: 5px;
+        }
+
+        /* Header Actions */
         .header-actions {
             display: flex;
-            gap: 15px;
+            gap: 20px;
+            align-items: center;
         }
 
         .icon-btn {
-            background: rgba(255, 255, 255, 0.1);
-            border: 1px solid rgba(255, 255, 255, 0.3);
+            background: none;
+            border: none;
+            color: var(--text-dark);
+            font-size: 1.2rem;
+            cursor: pointer;
+            position: relative;
+            transition: color 0.3s;
+            padding: 8px;
+        }
+
+        .icon-btn:hover {
+            color: var(--primary);
+        }
+
+        .badge {
+            position: absolute;
+            top: 0;
+            right: 0;
+            background: var(--accent);
+            color: var(--text-dark);
+            border-radius: 50%;
+            width: 18px;
+            height: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.7rem;
+            font-weight: 700;
+        }
+
+        /* Hero Slider */
+        .hero-slider {
+            position: relative;
+            height: 600px;
+            overflow: hidden;
+        }
+
+        .slide {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            transition: opacity 1s;
+            background-size: cover;
+            background-position: center;
+        }
+
+        .slide.active {
+            opacity: 1;
+        }
+
+        .slide-content {
+            position: absolute;
+            top: 50%;
+            left: 10%;
+            transform: translateY(-50%);
+            max-width: 500px;
             color: white;
-            padding: 10px 15px;
-            border-radius: 8px;
+        }
+
+        .slide-content h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+
+        .slide-content p {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.5);
+        }
+
+        .shop-now-btn {
+            background: var(--accent);
+            color: var(--text-dark);
+            padding: 15px 40px;
+            border: none;
+            border-radius: 30px;
+            font-weight: 700;
+            font-size: 1rem;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.3s;
+        }
+
+        .shop-now-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(212, 175, 55, 0.4);
+        }
+
+        /* Slider Controls */
+        .slider-controls {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 10px;
+        }
+
+        .slider-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.5);
             cursor: pointer;
             transition: all 0.3s;
         }
 
-        .icon-btn:hover {
-            background: rgba(255, 255, 255, 0.2);
-            transform: translateY(-2px);
+        .slider-dot.active {
+            background: white;
+            width: 30px;
+            border-radius: 6px;
         }
 
-        .admin-btn {
-            background: var(--accent);
-            color: var(--text-dark);
-            font-weight: 700;
-        }
-
-        /* Hero */
-        .hero {
-            background: linear-gradient(rgba(139, 69, 19, 0.7), rgba(93, 46, 15, 0.8)),
-                        url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 400"><rect fill="%238B4513" width="1200" height="400"/></svg>');
-            padding: 100px 5%;
-            text-align: center;
-            color: white;
-        }
-
-        .hero h1 {
-            font-family: 'Playfair Display', serif;
-            font-size: 4rem;
-            margin-bottom: 20px;
-        }
-
-        /* Products */
-        .container {
+        /* Categories Grid */
+        .categories-section {
+            padding: 80px 5%;
             max-width: 1400px;
             margin: 0 auto;
-            padding: 40px 5%;
         }
 
         .section-title {
@@ -149,7 +308,83 @@
             font-size: 2.5rem;
             color: var(--primary);
             text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .categories-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+        }
+
+        .category-card {
+            position: relative;
+            height: 350px;
+            border-radius: 15px;
+            overflow: hidden;
+            cursor: pointer;
+            box-shadow: 0 4px 15px var(--shadow);
+            transition: transform 0.3s;
+        }
+
+        .category-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .category-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+
+        .category-card:hover img {
+            transform: scale(1.1);
+        }
+
+        .category-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+            padding: 30px;
+            color: white;
+        }
+
+        .category-overlay h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            margin-bottom: 10px;
+        }
+
+        /* Products Section */
+        .products-section {
+            padding: 80px 5%;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .products-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
             margin-bottom: 40px;
+        }
+
+        .filter-bar {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .filter-select {
+            padding: 12px 20px;
+            border: 2px solid var(--border-color);
+            border-radius: 8px;
+            background: white;
+            cursor: pointer;
+            font-size: 0.95rem;
         }
 
         .product-grid {
@@ -163,21 +398,29 @@
             border-radius: 15px;
             overflow: hidden;
             box-shadow: 0 4px 15px var(--shadow);
-            transition: transform 0.3s;
+            transition: all 0.3s;
+            position: relative;
         }
 
         .product-card:hover {
             transform: translateY(-10px);
+            box-shadow: 0 12px 40px rgba(139, 69, 19, 0.2);
+        }
+
+        .product-image-container {
+            position: relative;
+            height: 350px;
+            overflow: hidden;
+            background: linear-gradient(135deg, var(--bg-cream), #E8DCC8);
         }
 
         .product-image {
-            height: 350px;
-            background: linear-gradient(135deg, var(--bg-cream), #E8DCC8);
+            width: 100%;
+            height: 100%;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 5rem;
-            position: relative;
+            font-size: 6rem;
         }
 
         .product-badge {
@@ -190,6 +433,43 @@
             border-radius: 20px;
             font-size: 0.75rem;
             font-weight: 700;
+            text-transform: uppercase;
+        }
+
+        .product-actions {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            opacity: 0;
+            transform: translateX(20px);
+            transition: all 0.3s;
+        }
+
+        .product-card:hover .product-actions {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .action-icon {
+            background: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 2px 10px var(--shadow);
+            transition: all 0.3s;
+        }
+
+        .action-icon:hover {
+            background: var(--primary);
+            color: white;
+            transform: scale(1.1);
         }
 
         .product-info {
@@ -200,6 +480,7 @@
             color: var(--text-medium);
             font-size: 0.85rem;
             text-transform: uppercase;
+            letter-spacing: 1px;
             margin-bottom: 8px;
         }
 
@@ -208,11 +489,20 @@
             font-size: 1.4rem;
             color: var(--primary-dark);
             margin-bottom: 10px;
+            font-weight: 600;
+        }
+
+        .product-description {
+            color: var(--text-medium);
+            font-size: 0.9rem;
+            margin-bottom: 15px;
+            line-height: 1.5;
         }
 
         .product-price {
             display: flex;
             justify-content: space-between;
+            align-items: center;
             margin-bottom: 15px;
         }
 
@@ -225,6 +515,7 @@
         .price-original {
             text-decoration: line-through;
             color: var(--text-medium);
+            font-size: 1.1rem;
         }
 
         .add-to-cart-btn {
@@ -234,8 +525,10 @@
             border: none;
             padding: 14px;
             border-radius: 8px;
-            cursor: pointer;
             font-weight: 600;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 1px;
             transition: all 0.3s;
         }
 
@@ -244,28 +537,109 @@
             box-shadow: 0 6px 20px rgba(139, 69, 19, 0.4);
         }
 
-        /* Loading */
-        .loading {
+        /* Newsletter */
+        .newsletter {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            padding: 60px 5%;
             text-align: center;
-            padding: 100px 20px;
-            font-size: 1.5rem;
-            color: var(--primary);
+            color: white;
         }
 
-        /* Admin Panel */
-        .admin-panel {
+        .newsletter h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            margin-bottom: 20px;
+        }
+
+        .newsletter-form {
+            max-width: 600px;
+            margin: 0 auto;
+            display: flex;
+            gap: 10px;
+        }
+
+        .newsletter-input {
+            flex: 1;
+            padding: 15px 20px;
+            border: none;
+            border-radius: 30px;
+            font-size: 1rem;
+        }
+
+        .newsletter-btn {
+            background: var(--accent);
+            color: var(--text-dark);
+            border: none;
+            padding: 15px 40px;
+            border-radius: 30px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .newsletter-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(212, 175, 55, 0.4);
+        }
+
+        /* Footer */
+        footer {
+            background: var(--primary-dark);
+            color: white;
+            padding: 60px 5% 30px;
+        }
+
+        .footer-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-section h4 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            color: var(--accent);
+        }
+
+        .footer-section p,
+        .footer-section a {
+            color: rgba(255,255,255,0.8);
+            text-decoration: none;
+            display: block;
+            margin-bottom: 10px;
+            transition: color 0.3s;
+        }
+
+        .footer-section a:hover {
+            color: var(--accent);
+            padding-left: 5px;
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            color: rgba(255,255,255,0.6);
+        }
+
+        /* Admin Popup */
+        .admin-popup {
             display: none;
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100vh;
-            background: rgba(0, 0, 0, 0.9);
-            z-index: 2000;
+            background: rgba(0,0,0,0.9);
+            z-index: 3000;
             overflow-y: auto;
         }
 
-        .admin-panel.active {
+        .admin-popup.active {
             display: flex;
             align-items: center;
             justify-content: center;
@@ -289,7 +663,7 @@
             border-bottom: 2px solid var(--border-color);
         }
 
-        .close-admin {
+        .close-btn {
             background: var(--primary);
             color: white;
             border: none;
@@ -298,8 +672,29 @@
             cursor: pointer;
         }
 
+        .info-box {
+            background: #e7f3ff;
+            border-left: 4px solid #2196F3;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+        }
+
+        .step {
+            background: white;
+            border: 2px solid var(--border-color);
+            padding: 20px;
+            margin: 15px 0;
+            border-radius: 10px;
+        }
+
+        .step h4 {
+            color: var(--primary);
+            margin-bottom: 10px;
+        }
+
         .form-group {
-            margin-bottom: 20px;
+            margin: 20px 0;
         }
 
         .form-group label {
@@ -317,39 +712,6 @@
             font-size: 1rem;
         }
 
-        .info-box {
-            background: #e7f3ff;
-            border-left: 4px solid #2196F3;
-            padding: 20px;
-            margin: 20px 0;
-            border-radius: 8px;
-        }
-
-        .info-box h3 {
-            color: #1976D2;
-            margin-bottom: 10px;
-        }
-
-        .info-box code {
-            background: #f5f5f5;
-            padding: 2px 6px;
-            border-radius: 3px;
-            font-family: monospace;
-        }
-
-        .step {
-            background: white;
-            border: 2px solid var(--border-color);
-            padding: 20px;
-            margin: 15px 0;
-            border-radius: 10px;
-        }
-
-        .step h4 {
-            color: var(--primary);
-            margin-bottom: 10px;
-        }
-
         .btn-primary {
             background: linear-gradient(135deg, var(--accent), #C9A32A);
             color: var(--text-dark);
@@ -362,374 +724,558 @@
             width: 100%;
         }
 
-        .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(212, 175, 55, 0.4);
+        /* Loading */
+        .loading {
+            text-align: center;
+            padding: 100px 20px;
+            font-size: 1.5rem;
+            color: var(--primary);
         }
 
-        /* Footer */
-        footer {
-            background: linear-gradient(135deg, var(--primary-dark), #3D1F0B);
-            color: white;
-            padding: 50px 5%;
-            margin-top: 80px;
-            text-align: center;
+        /* Mobile Menu */
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
         }
 
         /* Responsive */
+        @media (max-width: 1024px) {
+            .mega-menu {
+                min-width: 400px;
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
         @media (max-width: 768px) {
-            .header-main {
-                flex-direction: column;
-                gap: 20px;
+            .mobile-menu-btn {
+                display: block;
             }
 
-            nav ul {
-                flex-direction: column;
-                text-align: center;
+            nav {
+                display: none;
             }
 
-            .hero h1 {
-                font-size: 2.5rem;
+            .hero-slider {
+                height: 400px;
             }
 
-            .product-grid {
+            .slide-content h2 {
+                font-size: 2rem;
+            }
+
+            .categories-grid {
                 grid-template-columns: 1fr;
             }
 
-            .admin-content {
-                padding: 20px;
+            .product-grid {
+                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            }
+
+            .newsletter-form {
+                flex-direction: column;
             }
         }
     </style>
 </head>
 <body>
+    <!-- Top Bar -->
+    <div class="top-bar">
+        <div class="top-bar-content">
+            <div>
+                <a href="tel:+94771234567">📞 +94 77 123 4567</a>
+                <a href="mailto:info@sirisaree.lk">✉️ info@sirisaree.lk</a>
+            </div>
+            <div>
+                🚚 නොමිලේ බෙදාහැරීම රු. 5,000 ට වැඩි ඇණවුම් සඳහා
+            </div>
+            <div>
+                <a href="#" onclick="openAdmin()">🔐 Admin Panel</a>
+            </div>
+        </div>
+    </div>
+
     <!-- Header -->
     <header>
-        <div class="top-bar">
-            <a href="tel:+94771234567">📞 +94 77 123 4567</a>
-            <a href="mailto:info@sirisaree.lk">✉️ info@sirisaree.lk</a>
-            <span>🚚 නොමිලේ බෙදාහැරීම රු. 5000 ට වැඩි ඇණවුම්</span>
-        </div>
         <div class="header-main">
+            <button class="mobile-menu-btn">☰</button>
             <div class="logo">සිරි සාරි</div>
+            
             <nav>
                 <ul>
-                    <li><a href="#home">මුල් පිටුව</a></li>
-                    <li><a href="#products">එකතුව</a></li>
-                    <li><a href="#about">අප ගැන</a></li>
-                    <li><a href="#contact">අමතන්න</a></li>
+                    <li><a href="#home">Home</a></li>
+                    <li>
+                        <a href="#weave">Shop by Weave ▾</a>
+                        <div class="mega-menu">
+                            <div class="mega-menu-column">
+                                <h4>සම්ප්‍රදායික</h4>
+                                <ul>
+                                    <li><a href="#kanchi">Kanchipuram</a></li>
+                                    <li><a href="#banarasi">Banarasi</a></li>
+                                    <li><a href="#patola">Patan Patola</a></li>
+                                    <li><a href="#paithani">Paithani</a></li>
+                                </ul>
+                            </div>
+                            <div class="mega-menu-column">
+                                <h4>නවීන</h4>
+                                <ul>
+                                    <li><a href="#organza">Organza</a></li>
+                                    <li><a href="#georgette">Georgette</a></li>
+                                    <li><a href="#ikat">Ikat</a></li>
+                                    <li><a href="#bandhani">Bandhani</a></li>
+                                </ul>
+                            </div>
+                            <div class="mega-menu-column">
+                                <h4>විශේෂ</h4>
+                                <ul>
+                                    <li><a href="#bridal">Bridal Sarees</a></li>
+                                    <li><a href="#wedding">Wedding Collection</a></li>
+                                    <li><a href="#kalamkari">Kalamkari</a></li>
+                                    <li><a href="#chanderi">Chanderi</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <a href="#fabric">Shop by Fabric ▾</a>
+                        <div class="mega-menu">
+                            <div class="mega-menu-column">
+                                <h4>Silk Varieties</h4>
+                                <ul>
+                                    <li><a href="#silk">Pure Silk</a></li>
+                                    <li><a href="#soft-silk">Soft Silk</a></li>
+                                    <li><a href="#tussar">Tussar Silk</a></li>
+                                    <li><a href="#munga">Munga Silk</a></li>
+                                </ul>
+                            </div>
+                            <div class="mega-menu-column">
+                                <h4>Cotton & Blends</h4>
+                                <ul>
+                                    <li><a href="#cotton">Cotton</a></li>
+                                    <li><a href="#silk-cotton">Silk Cotton</a></li>
+                                    <li><a href="#jamdani">Jamdani</a></li>
+                                    <li><a href="#handspun">Handspun Cotton</a></li>
+                                </ul>
+                            </div>
+                            <div class="mega-menu-column">
+                                <h4>Premium</h4>
+                                <ul>
+                                    <li><a href="#mashru">Mashru Silk</a></li>
+                                    <li><a href="#chiniya">Chiniya Silk</a></li>
+                                    <li><a href="#kota">Kota Doria</a></li>
+                                    <li><a href="#mysore">Mysore Silk</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </li>
+                    <li><a href="#new">New Arrivals</a></li>
+                    <li><a href="#sale">Sale</a></li>
                 </ul>
             </nav>
+
             <div class="header-actions">
-                <button class="icon-btn admin-btn" onclick="openAdmin()">🔐 Admin</button>
-                <button class="icon-btn">🛒 කරත්තය</button>
+                <button class="icon-btn">
+                    🔍
+                </button>
+                <button class="icon-btn">
+                    ❤️
+                    <span class="badge">0</span>
+                </button>
+                <button class="icon-btn">
+                    🛒
+                    <span class="badge">0</span>
+                </button>
             </div>
         </div>
     </header>
 
-    <!-- Hero -->
-    <section class="hero" id="home">
-        <h1>අපූරු සාරි එකතුව</h1>
-        <p style="font-size: 1.3rem; font-family: 'Cormorant Garamond', serif;">
-            ශ්‍රී ලංකාවේ ප්‍රමුඛතම සාරි එකතුව - Google Sheets වලින් real-time update වන system එකක්
-        </p>
+    <!-- Hero Slider -->
+    <section class="hero-slider" id="home">
+        <div class="slide active" style="background: linear-gradient(rgba(139,69,19,0.5), rgba(93,46,15,0.7)), url('data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 1920 600%22><rect fill=%22%238B4513%22 width=%221920%22 height=%22600%22/></svg>');">
+            <div class="slide-content">
+                <h2>සම්ප්‍රදායික සාරි එකතුව</h2>
+                <p>Kanchipuram, Banarasi සහ තවත් බොහෝ සාරි 50% දක්වා වට්ටම්</p>
+                <button class="shop-now-btn">Shop Now</button>
+            </div>
+        </div>
+        <div class="slide" style="background: linear-gradient(rgba(139,69,19,0.5), rgba(93,46,15,0.7)), url('data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 1920 600%22><rect fill=%22%23D4AF37%22 width=%221920%22 height=%22600%22/></svg>');">
+            <div class="slide-content">
+                <h2>Bridal Collection</h2>
+                <p>විවාහ මංගල්‍ය සඳහා විශේෂ සාරි එකතුව</p>
+                <button class="shop-now-btn">Explore Now</button>
+            </div>
+        </div>
+        <div class="slide" style="background: linear-gradient(rgba(139,69,19,0.5), rgba(93,46,15,0.7)), url('data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 1920 600%22><rect fill=%22%235D2E0F%22 width=%221920%22 height=%22600%22/></svg>');">
+            <div class="slide-content">
+                <h2>New Arrivals</h2>
+                <p>නවතම designer සාරි එකතුව දැන් ලබා ගත හැක</p>
+                <button class="shop-now-btn">View Collection</button>
+            </div>
+        </div>
+        <div class="slider-controls">
+            <div class="slider-dot active" onclick="goToSlide(0)"></div>
+            <div class="slider-dot" onclick="goToSlide(1)"></div>
+            <div class="slider-dot" onclick="goToSlide(2)"></div>
+        </div>
     </section>
 
-    <!-- Products -->
-    <div class="container" id="products">
-        <h2 class="section-title">අපගේ එකතුව</h2>
-        <div id="productGrid" class="product-grid">
-            <div class="loading">⏳ නිෂ්පාදන load වෙමින්...</div>
+    <!-- Categories Section -->
+    <section class="categories-section">
+        <h2 class="section-title">Shop by Category</h2>
+        <div class="categories-grid">
+            <div class="category-card" style="background: linear-gradient(135deg, #8B4513, #5D2E0F);">
+                <div style="font-size: 8rem; text-align: center; padding-top: 80px; color: white;">👗</div>
+                <div class="category-overlay">
+                    <h3>Kanchipuram</h3>
+                    <p>සම්ප්‍රදායික සිල්ක් සාරි</p>
+                </div>
+            </div>
+            <div class="category-card" style="background: linear-gradient(135deg, #D4AF37, #C9A32A);">
+                <div style="font-size: 8rem; text-align: center; padding-top: 80px; color: white;">👘</div>
+                <div class="category-overlay">
+                    <h3>Banarasi</h3>
+                    <p>උසස් Banarasi සාරි</p>
+                </div>
+            </div>
+            <div class="category-card" style="background: linear-gradient(135deg, #6B4423, #2C1810);">
+                <div style="font-size: 8rem; text-align: center; padding-top: 80px; color: white;">🥻</div>
+                <div class="category-overlay">
+                    <h3>Cotton</h3>
+                    <p>සුවපහසු කපු සාරි</p>
+                </div>
+            </div>
+            <div class="category-card" style="background: linear-gradient(135deg, #E8DCC8, #D4AF37);">
+                <div style="font-size: 8rem; text-align: center; padding-top: 80px; color: white;">💗</div>
+                <div class="category-overlay">
+                    <h3>Bridal</h3>
+                    <p>විවාහ මංගල්‍ය සාරි</p>
+                </div>
+            </div>
         </div>
-    </div>
+    </section>
+
+    <!-- Products Section -->
+    <section class="products-section" id="products">
+        <div class="products-header">
+            <h2 class="section-title" style="margin: 0;">අපගේ එකතුව</h2>
+            <div class="filter-bar">
+                <select class="filter-select" id="categoryFilter" onchange="applyFilters()">
+                    <option value="all">සියලු කාණ්ඩ</option>
+                    <option value="kanchipuram">Kanchipuram</option>
+                    <option value="banarasi">Banarasi</option>
+                    <option value="cotton">Cotton</option>
+                    <option value="silk">Silk</option>
+                </select>
+                <select class="filter-select" id="priceFilter" onchange="applyFilters()">
+                    <option value="all">සියලු මිල</option>
+                    <option value="0-10000">රු. 10,000 ට අඩු</option>
+                    <option value="10000-50000">රු. 10,000 - 50,000</option>
+                    <option value="50000+">රු. 50,000 ට වැඩි</option>
+                </select>
+                <select class="filter-select" id="sortBy" onchange="applyFilters()">
+                    <option value="featured">Featured</option>
+                    <option value="price-low">මිල: අඩු සිට ඉහළ</option>
+                    <option value="price-high">මිල: ඉහළ සිට අඩු</option>
+                    <option value="new">අලුත්</option>
+                </select>
+            </div>
+        </div>
+        <div class="product-grid" id="productGrid">
+            <div class="loading">⏳ Products loading from Google Sheets...</div>
+        </div>
+    </section>
+
+    <!-- Newsletter -->
+    <section class="newsletter">
+        <h3>නවතම දීමනා සහ updates ලබා ගන්න</h3>
+        <p>ඔබේ email address එක enter කරන්න</p>
+        <form class="newsletter-form" onsubmit="subscribeNewsletter(event)">
+            <input type="email" class="newsletter-input" placeholder="your@email.com" required>
+            <button type="submit" class="newsletter-btn">Subscribe</button>
+        </form>
+    </section>
 
     <!-- Footer -->
     <footer>
-        <h3 style="font-family: 'Playfair Display', serif; margin-bottom: 20px;">සිරි සාරි</h3>
-        <p>කොළඹ 03, ශ්‍රී ලංකාව | +94 77 123 4567 | info@sirisaree.lk</p>
-        <p style="margin-top: 20px; opacity: 0.8;">© 2026 සිරි සාරි. සියලුම හිමිකම් ඇවිරිණි.</p>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4>සිරි සාරි ගැන</h4>
+                <p>ශ්‍රී ලංකාවේ ප්‍රමුඛතම සාරි විකුණුම්කරු. අපි ඔබට උසස් තත්ත්වයේ සාරි රැසක් ලබා දෙනවා.</p>
+            </div>
+            <div class="footer-section">
+                <h4>ප්‍රයෝජනවත් සබැඳි</h4>
+                <a href="#">අප ගැන</a>
+                <a href="#">බෙදාහැරීමේ ප්‍රතිපත්තිය</a>
+                <a href="#">ආපසු ගෙන්වීම්</a>
+                <a href="#">රහස්‍යතා ප්‍රතිපත්තිය</a>
+            </div>
+            <div class="footer-section">
+                <h4>අප අමතන්න</h4>
+                <p>📍 කොළඹ 03, ශ්‍රී ලංකාව</p>
+                <p>📞 +94 77 123 4567</p>
+                <p>✉️ info@sirisaree.lk</p>
+            </div>
+            <div class="footer-section">
+                <h4>අප අනුගමනය කරන්න</h4>
+                <a href="#">Facebook</a>
+                <a href="#">Instagram</a>
+                <a href="#">WhatsApp</a>
+                <a href="#">YouTube</a>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>© 2026 සිරි සාරි. සියලුම හිමිකම් ඇවිරිණි. | Powered by Google Sheets</p>
+        </div>
     </footer>
 
-    <!-- Admin Panel -->
-    <div class="admin-panel" id="adminPanel">
+    <!-- Admin Popup -->
+    <div class="admin-popup" id="adminPopup">
         <div class="admin-content">
             <div class="admin-header">
                 <h2 style="font-family: 'Playfair Display', serif; color: var(--primary);">
                     Admin Panel - Google Sheets Integration
                 </h2>
-                <button class="close-admin" onclick="closeAdmin()">✕ වසන්න</button>
+                <button class="close-btn" onclick="closeAdmin()">✕ Close</button>
             </div>
 
             <div class="info-box">
-                <h3>📊 Google Sheets Integration Setup</h3>
-                <p>ඔබේ website එක Google Sheets එකක් සමග connect කරන්න පහත steps follow කරන්න:</p>
-            </div>
-
-            <div class="step">
-                <h4>Step 1: Google Sheet එකක් හදාගන්න</h4>
-                <p>1. Google Sheets එකට යන්න: <a href="https://sheets.google.com" target="_blank">sheets.google.com</a></p>
-                <p>2. නව spreadsheet එකක් හදාගන්න</p>
-                <p>3. පහත column headers add කරන්න (Row 1):</p>
+                <h3>📊 Google Sheets Setup</h3>
+                <p><strong>Column Headers පහත පිළිවෙළින් add කරන්න:</strong></p>
                 <code style="display: block; margin: 10px 0; padding: 10px; background: #f5f5f5;">
                     name | category | price | originalPrice | color | description | badge | image
                 </code>
-                <p>4. Sample data add කරන්න:</p>
-                <code style="display: block; margin: 10px 0; padding: 10px; background: #f5f5f5; font-size: 0.85rem;">
-                    Row 2: සම්ප්‍රදායික කපු | කපු | 4500 | 6500 | නිල් | සුවපහසු සාරිය | ජනප්‍රිය | 👗
-                </code>
             </div>
 
             <div class="step">
-                <h4>Step 2: Sheet එක Publish කරන්න</h4>
-                <p>1. <strong>File</strong> → <strong>Share</strong> → <strong>Publish to web</strong></p>
-                <p>2. Format එක <strong>"Comma-separated values (.csv)"</strong> select කරන්න</p>
-                <p>3. <strong>"Publish"</strong> click කරන්න</p>
-                <p>4. URL එක copy කරගන්න (මේ වගේ පෙනෙයි):</p>
-                <code style="display: block; margin: 10px 0; padding: 10px; background: #f5f5f5; word-break: break-all; font-size: 0.75rem;">
-                    https://docs.google.com/spreadsheets/d/e/YOUR-SHEET-ID/pub?output=csv
-                </code>
+                <h4>Step 1: Sheet එක Publish කරන්න</h4>
+                <p>1. File → Share → Publish to web</p>
+                <p>2. Format: Comma-separated values (.csv)</p>
+                <p>3. Publish button click කරන්න</p>
+                <p>4. URL එක copy කරගන්න</p>
             </div>
 
             <div class="step">
-                <h4>Step 3: URL එක මෙහි Paste කරන්න</h4>
+                <h4>Step 2: URL එක එකතු කරන්න</h4>
                 <div class="form-group">
                     <label>Google Sheets CSV URL:</label>
                     <input type="text" id="sheetUrl" placeholder="https://docs.google.com/spreadsheets/d/e/..." />
                 </div>
-                <button class="btn-primary" onclick="saveSheetUrl()">💾 URL එක Save කරන්න</button>
+                <button class="btn-primary" onclick="saveSheetUrl()">💾 Save URL</button>
             </div>
 
             <div class="step">
-                <h4>📝 වත්මන් Sheet URL:</h4>
-                <p id="currentUrl" style="word-break: break-all; background: #f5f5f5; padding: 10px; border-radius: 5px; margin-top: 10px;">
-                    තවම set කර නැත
-                </p>
-                <button class="btn-primary" onclick="loadFromSheet()" style="margin-top: 10px; background: linear-gradient(135deg, var(--primary), var(--primary-dark));">
-                    🔄 Sheet එකෙන් Products Load කරන්න
+                <h4>Step 3: Products Load කරන්න</h4>
+                <button class="btn-primary" onclick="loadProducts()" style="background: linear-gradient(135deg, var(--primary), var(--primary-dark));">
+                    🔄 Load Products from Sheet
                 </button>
-            </div>
-
-            <div class="info-box" style="background: #fff3cd; border-left-color: #ffc107;">
-                <h3>💡 වැදගත් සටහන්:</h3>
-                <ul style="margin-left: 20px; margin-top: 10px;">
-                    <li>Sheet එක update කරන වෙලාවලදී website එක automatic ලෙස update වෙන්නේ නැහැ</li>
-                    <li>"🔄 Sheet එකෙන් Products Load කරන්න" button එක click කරන්න updates ගන්න</li>
-                    <li>Real-time updates අවශ්‍ය නම් Google Apps Script use කරන්න පුළුවන්</li>
-                    <li>Image column එකේ emojis හෝ image URLs දාන්න පුළුවන්</li>
-                </ul>
+                <p style="margin-top: 15px; color: var(--text-medium); font-size: 0.9rem;">
+                    Current URL: <span id="currentUrl" style="word-break: break-all;">Not set</span>
+                </p>
             </div>
         </div>
     </div>
 
     <script>
-        const SHEET_URL_KEY = 'googleSheetUrl';
-        const PRODUCTS_CACHE_KEY = 'cachedProducts';
+        const SHEET_URL_KEY = 'sheetUrl';
+        const PRODUCTS_KEY = 'products';
+        let currentSlide = 0;
+        let allProducts = [];
 
-        // Get saved sheet URL
-        function getSavedSheetUrl() {
-            return localStorage.getItem(SHEET_URL_KEY) || '';
+        // Slider
+        function goToSlide(index) {
+            const slides = document.querySelectorAll('.slide');
+            const dots = document.querySelectorAll('.slider-dot');
+            
+            slides[currentSlide].classList.remove('active');
+            dots[currentSlide].classList.remove('active');
+            
+            currentSlide = index;
+            
+            slides[currentSlide].classList.add('active');
+            dots[currentSlide].classList.add('active');
         }
 
-        // Save sheet URL
+        setInterval(() => {
+            goToSlide((currentSlide + 1) % 3);
+        }, 5000);
+
+        // Admin Functions
+        function openAdmin() {
+            document.getElementById('adminPopup').classList.add('active');
+            const url = localStorage.getItem(SHEET_URL_KEY) || '';
+            document.getElementById('sheetUrl').value = url;
+            document.getElementById('currentUrl').textContent = url || 'Not set';
+        }
+
+        function closeAdmin() {
+            document.getElementById('adminPopup').classList.remove('active');
+        }
+
         function saveSheetUrl() {
             const url = document.getElementById('sheetUrl').value.trim();
-            
             if (!url) {
-                alert('කරුණාකර valid Google Sheets URL එකක් enter කරන්න!');
+                alert('Please enter a valid URL!');
                 return;
             }
-
-            // Validate URL format
-            if (!url.includes('docs.google.com/spreadsheets') && !url.includes('output=csv')) {
-                alert('Invalid URL! Sheet එක publish to web කර CSV format එකෙන් URL එක copy කරන්න.');
-                return;
-            }
-
             localStorage.setItem(SHEET_URL_KEY, url);
             document.getElementById('currentUrl').textContent = url;
-            
-            alert('✅ URL එක save කරන ලදී! දැන් "Sheet එකෙන් Products Load කරන්න" click කරන්න.');
+            alert('✅ URL saved successfully! Now click "Load Products"');
         }
 
-        // Load products from Google Sheet
-        async function loadFromSheet() {
-            const url = getSavedSheetUrl();
-            
+        async function loadProducts() {
+            const url = localStorage.getItem(SHEET_URL_KEY);
             if (!url) {
-                alert('කරුණාකර පළමුව Google Sheets URL එක save කරන්න!');
+                alert('Please save Sheet URL first!');
                 return;
             }
 
             try {
-                showLoading();
+                document.getElementById('productGrid').innerHTML = '<div class="loading">⏳ Loading...</div>';
                 
-                // Fetch CSV data
                 const response = await fetch(url);
-                const csvText = await response.text();
+                const csv = await response.text();
                 
-                // Parse CSV
-                const products = parseCSV(csvText);
+                const products = parseCSV(csv);
+                localStorage.setItem(PRODUCTS_KEY, JSON.stringify(products));
+                allProducts = products;
                 
-                // Cache products
-                localStorage.setItem(PRODUCTS_CACHE_KEY, JSON.stringify(products));
-                
-                // Display products
                 displayProducts(products);
-                
-                alert(`✅ සාර්ථකව products ${products.length}ක් load කරන ලදී!`);
+                closeAdmin();
+                alert(`✅ Loaded ${products.length} products successfully!`);
             } catch (error) {
-                console.error('Error loading from sheet:', error);
-                alert('❌ Sheet එකෙන් load කිරීමේදී දෝෂයක්! URL එක නිවැරදිද බලන්න.');
+                console.error(error);
+                alert('❌ Error loading products. Check URL and try again.');
             }
         }
 
-        // Parse CSV to products array
         function parseCSV(csv) {
             const lines = csv.trim().split('\n');
-            const headers = lines[0].split(',').map(h => h.trim());
-            
+            const headers = lines[0].split(',');
             const products = [];
-            
+
             for (let i = 1; i < lines.length; i++) {
-                const values = parseCSVLine(lines[i]);
-                
-                if (values.length < headers.length) continue;
-                
-                const product = {};
-                headers.forEach((header, index) => {
-                    product[header] = values[index] ? values[index].trim() : '';
-                });
-                
-                // Convert to proper format
+                const values = lines[i].split(',');
+                if (values.length < 8) continue;
+
                 products.push({
                     id: i,
-                    name: product.name || 'නිෂ්පාදනය',
-                    category: product.category || 'general',
-                    price: parseInt(product.price) || 0,
-                    originalPrice: parseInt(product.originalPrice) || null,
-                    color: product.color || '',
-                    description: product.description || '',
-                    badge: product.badge || '',
-                    image: product.image || '🛍️'
+                    name: values[0]?.trim() || '',
+                    category: values[1]?.trim() || '',
+                    price: parseInt(values[2]) || 0,
+                    originalPrice: parseInt(values[3]) || null,
+                    color: values[4]?.trim() || '',
+                    description: values[5]?.trim() || '',
+                    badge: values[6]?.trim() || '',
+                    image: values[7]?.trim() || '🛍️'
                 });
             }
-            
+
             return products;
         }
 
-        // Parse single CSV line (handles commas in quotes)
-        function parseCSVLine(line) {
-            const result = [];
-            let current = '';
-            let inQuotes = false;
-            
-            for (let i = 0; i < line.length; i++) {
-                const char = line[i];
-                
-                if (char === '"') {
-                    inQuotes = !inQuotes;
-                } else if (char === ',' && !inQuotes) {
-                    result.push(current);
-                    current = '';
-                } else {
-                    current += char;
-                }
-            }
-            
-            result.push(current);
-            return result;
-        }
-
-        // Display products
         function displayProducts(products) {
             const grid = document.getElementById('productGrid');
             
             if (!products || products.length === 0) {
-                grid.innerHTML = '<div class="loading">❌ නිෂ්පාදන නැත</div>';
+                grid.innerHTML = `
+                    <div class="loading">
+                        <p>No products found. Please setup Google Sheets integration.</p>
+                        <button class="shop-now-btn" onclick="openAdmin()" style="margin-top: 20px;">
+                            Open Admin Panel
+                        </button>
+                    </div>
+                `;
                 return;
             }
-            
+
             grid.innerHTML = products.map(product => `
-                <div class="product-card">
-                    <div class="product-image">
-                        <span style="font-size: 5rem;">${product.image}</span>
+                <div class="product-card" data-category="${product.category}" data-price="${product.price}">
+                    <div class="product-image-container">
+                        <div class="product-image">${product.image}</div>
                         ${product.badge ? `<div class="product-badge">${product.badge}</div>` : ''}
+                        <div class="product-actions">
+                            <div class="action-icon" title="Quick View">👁️</div>
+                            <div class="action-icon" title="Add to Wishlist">❤️</div>
+                            <div class="action-icon" title="Compare">⚖️</div>
+                        </div>
                     </div>
                     <div class="product-info">
                         <div class="product-category">${product.category}</div>
                         <h3 class="product-name">${product.name}</h3>
-                        <p style="color: var(--text-medium); font-size: 0.9rem; margin-bottom: 15px;">${product.description}</p>
+                        <p class="product-description">${product.description}</p>
                         <div class="product-price">
                             <span class="price">රු. ${product.price.toLocaleString()}</span>
                             ${product.originalPrice ? `<span class="price-original">රු. ${product.originalPrice.toLocaleString()}</span>` : ''}
                         </div>
-                        <button class="add-to-cart-btn">කරත්තයට එකතු කරන්න</button>
+                        <button class="add-to-cart-btn">Add to Cart</button>
                     </div>
                 </div>
             `).join('');
         }
 
-        // Show loading
-        function showLoading() {
-            document.getElementById('productGrid').innerHTML = '<div class="loading">⏳ Loading...</div>';
+        function applyFilters() {
+            const category = document.getElementById('categoryFilter').value;
+            const price = document.getElementById('priceFilter').value;
+            const sort = document.getElementById('sortBy').value;
+
+            let filtered = [...allProducts];
+
+            // Category filter
+            if (category !== 'all') {
+                filtered = filtered.filter(p => p.category.toLowerCase().includes(category.toLowerCase()));
+            }
+
+            // Price filter
+            if (price !== 'all') {
+                if (price === '50000+') {
+                    filtered = filtered.filter(p => p.price >= 50000);
+                } else {
+                    const [min, max] = price.split('-').map(Number);
+                    filtered = filtered.filter(p => p.price >= min && p.price <= max);
+                }
+            }
+
+            // Sorting
+            if (sort === 'price-low') {
+                filtered.sort((a, b) => a.price - b.price);
+            } else if (sort === 'price-high') {
+                filtered.sort((a, b) => b.price - a.price);
+            } else if (sort === 'new') {
+                filtered.reverse();
+            }
+
+            displayProducts(filtered);
         }
 
-        // Load cached products on page load
-        function loadCachedProducts() {
-            const cached = localStorage.getItem(PRODUCTS_CACHE_KEY);
-            
+        function subscribeNewsletter(e) {
+            e.preventDefault();
+            alert('✅ Thank you for subscribing!');
+            e.target.reset();
+        }
+
+        // Initialize
+        window.addEventListener('DOMContentLoaded', () => {
+            const cached = localStorage.getItem(PRODUCTS_KEY);
             if (cached) {
-                try {
-                    const products = JSON.parse(cached);
-                    displayProducts(products);
-                } catch (error) {
-                    // Show default message
-                    document.getElementById('productGrid').innerHTML = `
-                        <div class="loading">
-                            <p>Google Sheets integration setup කරන්න Admin Panel එකට යන්න</p>
-                            <button class="admin-btn" onclick="openAdmin()" style="margin-top: 20px; padding: 15px 30px; cursor: pointer;">
-                                🔐 Admin Panel Open කරන්න
-                            </button>
-                        </div>
-                    `;
-                }
+                allProducts = JSON.parse(cached);
+                displayProducts(allProducts);
             } else {
-                // Show setup message
                 document.getElementById('productGrid').innerHTML = `
                     <div class="loading">
-                        <p style="margin-bottom: 20px;">👋 ආයුබෝවන්! Google Sheets integration setup කරන්න Admin Panel එකට යන්න</p>
-                        <button class="admin-btn" onclick="openAdmin()" style="padding: 15px 30px; cursor: pointer; background: var(--accent); color: var(--text-dark); border: none; border-radius: 8px; font-weight: 700;">
-                            🔐 Admin Panel Open කරන්න
+                        <p>👋 Welcome! Please setup Google Sheets integration</p>
+                        <button class="shop-now-btn" onclick="openAdmin()" style="margin-top: 20px;">
+                            Open Admin Panel
                         </button>
                     </div>
                 `;
             }
-        }
-
-        // Admin panel functions
-        function openAdmin() {
-            document.getElementById('adminPanel').classList.add('active');
-            
-            // Show current URL
-            const currentUrl = getSavedSheetUrl();
-            document.getElementById('currentUrl').textContent = currentUrl || 'තවම set කර නැත';
-            document.getElementById('sheetUrl').value = currentUrl;
-        }
-
-        function closeAdmin() {
-            document.getElementById('adminPanel').classList.remove('active');
-        }
-
-        // Initialize on load
-        window.addEventListener('DOMContentLoaded', () => {
-            loadCachedProducts();
         });
 
-        // Close admin panel with Escape key
+        // Close admin with Escape
         document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape') {
-                closeAdmin();
-            }
+            if (e.key === 'Escape') closeAdmin();
         });
     </script>
 </body>
