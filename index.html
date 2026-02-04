@@ -30,6 +30,119 @@
             scroll-behavior: smooth;
         }
 
+        <div class="admin-popup" id="adminPopup">
+        <div class="admin-content">
+            <div class="admin-header">
+                <h2 style="font-family: 'Playfair Display', serif; color: var(--primary);">
+                    Admin Panel - Google Sheets
+                </h2>
+                <button class="close-btn" onclick="closeAdmin()">Close ×</button>
+            </div>
+
+            <div class="info-box">
+                මෙම වෙබ් අඩවිය Google Sheets සමඟ සම්බන්ධ කර ඇත. ඔබ Sheet එකට ඇතුළත් කරන දත්ත මෙහි ස්වයංක්‍රීයව දිස්වේ.
+            </div>
+
+            <div class="step">
+                <h4>පියවර 1: Google Sheet එක විවෘත කරන්න</h4>
+                <p>ඔබේ භාණ්ඩ ඇතුළත් කිරීමට පහත බොත්තම ක්ලික් කර Sheet එකට යන්න.</p>
+                <a href="https://docs.google.com/spreadsheets/d/1YNPAC7OCg47t-OBKaG91_q39qGU6MePatB8uL-rLVFg/edit" target="_blank" class="btn-primary" style="display:inline-block; text-align:center; text-decoration:none; margin-top:10px;">Open Google Sheet</a>
+            </div>
+
+            <div class="step">
+                <h4>පියවර 2: Google Form එක භාවිතා කරන්න</h4>
+                <p>නව භාණ්ඩයක් ඉතා ඉක්මනින් ඇතුළත් කිරීමට මෙම Form එක පුරවන්න.</p>
+                <button class="btn-primary" onclick="window.open('ඔබේ_google_form_link_එක_මෙහි_දමන්න')">Open Entry Form</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // --- configuration ---
+        const SHEET_ID = '1YNPAC7OCg47t-OBKaG91_q39qGU6MePatB8uL-rLVFg';
+        const WHATSAPP_NUM = '94771234567';
+        
+        let allProducts = [];
+
+        // --- Data Loading ---
+        async function fetchProducts() {
+            const url = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&t=${new Date().getTime()}`;
+            try {
+                const response = await fetch(url);
+                const text = await response.text();
+                const json = JSON.parse(text.substring(47).slice(0, -2));
+                const rows = json.table.rows;
+
+                allProducts = rows.slice(1).map(row => ({
+                    name: row.c[0]?.v || "",
+                    category: row.c[1]?.v || "General",
+                    price: row.c[2]?.v || 0,
+                    img: row.c[3]?.v || "https://via.placeholder.com/300x400?text=Saree",
+                    badge: row.c[6]?.v || "",
+                    oldPrice: row.c[7]?.v || ""
+                }));
+
+                displayProducts(allProducts);
+            } catch (error) {
+                console.error("Error loading data:", error);
+                document.getElementById('productGrid').innerHTML = "දත්ත පූරණය කිරීමේ දෝෂයකි.";
+            }
+        }
+
+        function displayProducts(products) {
+            const grid = document.getElementById('productGrid');
+            grid.innerHTML = products.map(p => `
+                <div class="product-card">
+                    <div class="product-image-container">
+                        ${p.badge ? `<span class="product-badge">${p.badge}</span>` : ''}
+                        <div class="product-image">🥻</div>
+                        <div class="product-actions">
+                            <div class="action-icon">❤️</div>
+                            <div class="action-icon" onclick="sendWhatsApp('${p.name}')">🛒</div>
+                        </div>
+                    </div>
+                    <div class="product-info">
+                        <div class="product-category">${p.category}</div>
+                        <h3 class="product-name">${p.name}</h3>
+                        <div class="product-price">
+                            <span class="price">රු. ${p.price}</span>
+                            ${p.oldPrice ? `<span class="price-original">රු. ${p.oldPrice}</span>` : ''}
+                        </div>
+                        <button class="add-to-cart-btn" onclick="sendWhatsApp('${p.name}')">දැන්ම ඇණවුම් කරන්න</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // --- Admin Functions ---
+        function openAdmin() { document.getElementById('adminPopup').classList.add('active'); }
+        function closeAdmin() { document.getElementById('adminPopup').classList.remove('active'); }
+
+        function sendWhatsApp(name) {
+            const msg = encodeURIComponent(`ආයුබෝවන්! මම මෙම සාරිය ගැන දැනගන්න කැමතියි: ${name}`);
+            window.open(`https://wa.me/${WHATSAPP_NUM}?text=${msg}`, '_blank');
+        }
+
+        // --- Slider Logic ---
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+        const dots = document.querySelectorAll('.slider-dot');
+
+        function goToSlide(n) {
+            slides[currentSlide].classList.remove('active');
+            dots[currentSlide].classList.remove('active');
+            currentSlide = n;
+            slides[currentSlide].classList.add('active');
+            dots[currentSlide].classList.add('active');
+        }
+
+        setInterval(() => {
+            let next = (currentSlide + 1) % slides.length;
+            goToSlide(next);
+        }, 5000);
+
+        window.onload = fetchProducts;
+    </script>
         body {
             font-family: 'Lato', sans-serif;
             background: var(--bg-cream);
