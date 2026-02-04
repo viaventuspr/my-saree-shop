@@ -87,4 +87,136 @@
 
         /* Badges (New/Sale) */
         .badge {
-            position: absolute; top: 15px; left:
+            position: absolute; top: 15px; left: 15px;
+            background: var(--primary-black); color: #fff;
+            padding: 5px 12px; font-size: 10px; font-weight: 500;
+            text-transform: uppercase; letter-spacing: 1px;
+            z-index: 10;
+        }
+
+        /* Info */
+        .product-info { padding: 20px 0; text-align: left; }
+        .category { font-size: 11px; color: var(--text-gray); text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 8px; }
+        .product-name {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.3rem;
+            margin-bottom: 10px;
+            font-weight: 500;
+            line-height: 1.3;
+        }
+
+        .price-box { display: flex; align-items: center; gap: 10px; margin-bottom: 15px; }
+        .current-price { font-size: 1.1rem; font-weight: 500; }
+        .old-price { color: #bbb; text-decoration: line-through; font-size: 0.9rem; }
+
+        /* Order Button */
+        .order-btn {
+            display: block;
+            width: 100%;
+            padding: 12px;
+            background: transparent;
+            border: 1px solid var(--primary-black);
+            color: var(--primary-black);
+            text-transform: uppercase;
+            font-size: 11px;
+            letter-spacing: 2px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: 0.3s;
+        }
+        .order-btn:hover {
+            background: var(--primary-black);
+            color: #fff;
+        }
+
+        /* Loading */
+        #loader { text-align: center; padding: 100px; letter-spacing: 2px; color: var(--text-gray); }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .product-grid { grid-template-columns: repeat(2, 1fr); gap: 25px 15px; }
+            .image-wrapper { height: 280px; }
+            .logo { font-size: 1.8rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <a href="#" class="logo">සිරි සාරි</a>
+    </header>
+
+    <div class="collection-banner">
+        <h1>COTTON SILK SAREES</h1>
+    </div>
+
+    <div class="container">
+        <div id="loader">පූරණය වෙමින් පවතී...</div>
+        <div class="product-grid" id="productGrid"></div>
+    </div>
+
+    <script>
+        // --- Admin Config ---
+        const SHEET_ID = '1YNPAC7OCg47t-OBKaG91_q39qGU6MePatB8uL-rLVFg';
+        const WHATSAPP_NUM = '94771234567'; // ඔබේ WhatsApp අංකය මෙතැනට දමන්න
+        
+        // Cache වැලැක්වීමට Timestamp එකතු කර ඇත
+        const JSON_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&t=${new Date().getTime()}`;
+
+        async function loadSarees() {
+            try {
+                const response = await fetch(JSON_URL);
+                const text = await response.text();
+                const json = JSON.parse(text.substring(47).slice(0, -2));
+                const rows = json.table.rows;
+                const grid = document.getElementById('productGrid');
+                
+                grid.innerHTML = '';
+                document.getElementById('loader').style.display = 'none';
+
+                rows.forEach((row, index) => {
+                    if (index === 0) return; // Header Row එක අතහරින්න
+
+                    // Column Mapping (A=0, B=1, C=2, D=3, E=4, F=5, G=6, H=7)
+                    const name = row.c[0] ? row.c[0].v : "";
+                    const category = row.c[1] ? row.c[1].v : "Saree";
+                    const price = row.c[2] ? row.c[2].v : "";
+                    const img = row.c[3] ? row.c[3].v : "";
+                    const badge = row.c[6] ? row.c[6].v : "";
+                    const originalPrice = row.c[7] ? row.c[7].v : "";
+
+                    if (img && name) {
+                        grid.innerHTML += `
+                            <div class="product-card">
+                                <div class="image-wrapper">
+                                    ${badge ? `<span class="badge">${badge}</span>` : ''}
+                                    <img src="${img}" class="product-image" loading="lazy">
+                                </div>
+                                <div class="product-info">
+                                    <div class="category">${category}</div>
+                                    <h3 class="product-name">${name}</h3>
+                                    <div class="price-box">
+                                        <span class="current-price">රු. ${price}</span>
+                                        ${originalPrice ? `<span class="old-price">රු. ${originalPrice}</span>` : ''}
+                                    </div>
+                                    <button class="order-btn" onclick="sendWhatsApp('${name}')">WhatsApp ඇණවුම්</button>
+                                </div>
+                            </div>
+                        `;
+                    }
+                });
+            } catch (error) {
+                console.error("Error:", error);
+                document.getElementById('loader').innerHTML = "දත්ත ලබා ගැනීමේ දෝෂයකි. කරුණාකර Sheet එක Publish කර ඇත්දැයි බලන්න.";
+            }
+        }
+
+        function sendWhatsApp(product) {
+            const message = encodeURIComponent(`ආයුබෝවන්! මම මෙම සාරිය මිලදී ගැනීමට කැමතියි: ${product}`);
+            window.open(`https://wa.me/${WHATSAPP_NUM}?text=${message}`, '_blank');
+        }
+
+        window.onload = loadSarees;
+    </script>
+</body>
+</html>
