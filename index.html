@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>සිරි සාරි Studio | WhatsApp Ordering</title>
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+    <title>සිරි සාරි Studio | Secure Shopping Experience</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <style>
-        /* මූලික සැකසුම් පෙර පරිදිම වේ */
         * { margin: 0; padding: 0; box-sizing: border-box; }
         :root {
             --bg-dark: #0a0a0a;
@@ -16,6 +16,7 @@
             --accent: #D4AF37;
             --accent-hover: #C9A32A;
             --border: #2a2a2a;
+            --whatsapp: #25D366;
         }
 
         body {
@@ -23,68 +24,20 @@
             background: var(--bg-dark);
             color: var(--text-primary);
             line-height: 1.6;
+            overflow-x: hidden;
+            scroll-behavior: smooth;
         }
 
-        /* Header & Hero Styles */
+        /* Header */
         header {
             position: fixed; top: 0; width: 100%;
             background: rgba(10, 10, 10, 0.8);
             backdrop-filter: blur(20px);
             border-bottom: 1px solid var(--border);
-            z-index: 1000; padding: 20px 5%;
+            z-index: 1000; transition: all 0.3s;
         }
-        .nav-container { max-width: 1400px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; }
-        .logo { font-size: 1.5rem; font-weight: 800; color: var(--accent); }
-
-        .hero {
-            min-height: 70vh; display: flex; align-items: center; justify-content: center;
-            text-align: center; padding: 100px 5%;
+        .nav-container {
+            max-width: 1400px; margin: 0 auto; padding: 20px 5%;
+            display: flex; justify-content: space-between; align-items: center;
         }
-        .hero h1 { font-size: 4rem; margin-bottom: 20px; color: white; }
-
-        /* Product Card Styles */
-        .section { padding: 50px 5%; max-width: 1400px; margin: 0 auto; }
-        .products-grid {
-            display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 30px; margin-top: 40px;
-        }
-        .product-card {
-            background: var(--bg-card); border: 1px solid var(--border);
-            border-radius: 20px; overflow: hidden; transition: 0.3s;
-        }
-        .product-card:hover { border-color: var(--accent); transform: translateY(-5px); }
-        
-        .product-image {
-            height: 300px; background: #252525;
-            display: flex; align-items: center; justify-content: center;
-            font-size: 5rem; overflow: hidden;
-        }
-        .product-image img { width: 100%; height: 100%; object-fit: cover; }
-
-        .product-info { padding: 20px; }
-        .product-price { font-size: 1.4rem; color: var(--accent); font-weight: 800; margin: 10px 0; }
-        
-        /* WhatsApp Button */
-        .buy-btn {
-            width: 100%; background: #25D366; color: white;
-            border: none; padding: 12px; border-radius: 10px;
-            font-weight: 700; cursor: pointer; display: flex;
-            align-items: center; justify-content: center; gap: 10px;
-            transition: 0.3s;
-        }
-        .buy-btn:hover { background: #128C7E; }
-
-        /* Admin Panel Styles */
-        .admin-panel {
-            display: none; position: fixed; inset: 0;
-            background: rgba(0,0,0,0.9); z-index: 2000;
-            align-items: center; justify-content: center;
-        }
-        .admin-panel.active { display: flex; }
-        .admin-content {
-            background: var(--bg-card); padding: 40px;
-            border-radius: 20px; width: 90%; max-width: 500px;
-        }
-        input {
-            width: 100%; padding: 12px; margin: 10px 0;
-            background: #000; border
+        .logo { font-size: 1.5rem; font-weight: 80
