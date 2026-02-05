@@ -3,41 +3,194 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
-    <title>සිරි සාරි Studio | Secure Shopping Experience</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <title>සිරි සාරි Studio | AI-Powered Premium Boutique</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
         :root {
             --bg-dark: #0a0a0a;
-            --bg-card: #1a1a1a;
+            --bg-card: #141414;
+            --accent: #D4AF37;
             --text-primary: #ffffff;
             --text-secondary: #a0a0a0;
-            --accent: #D4AF37;
-            --accent-hover: #C9A32A;
             --border: #2a2a2a;
             --whatsapp: #25D366;
         }
 
-        body {
-            font-family: 'Inter', sans-serif;
-            background: var(--bg-dark);
-            color: var(--text-primary);
-            line-height: 1.6;
-            overflow-x: hidden;
-            scroll-behavior: smooth;
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Inter', sans-serif; background: var(--bg-dark); color: var(--text-primary); line-height: 1.6; }
+
+        /* Header & Hero */
+        header { position: fixed; top: 0; width: 100%; background: rgba(10,10,10,0.8); backdrop-filter: blur(15px); border-bottom: 1px solid var(--border); z-index: 1000; padding: 20px 5%; }
+        .nav-container { max-width: 1400px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; }
+        .logo { font-size: 1.5rem; font-weight: 800; color: var(--accent); text-transform: uppercase; }
+
+        .hero { min-height: 50vh; display: flex; align-items: center; justify-content: center; text-align: center; padding-top: 100px; }
+        .hero h1 { font-size: 3.5rem; background: linear-gradient(to right, #fff, var(--accent)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+
+        /* Products Grid */
+        .section { padding: 40px 5%; max-width: 1400px; margin: 0 auto; }
+        .products-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 25px; }
+
+        .product-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 20px; overflow: hidden; transition: 0.3s; }
+        .product-card:hover { border-color: var(--accent); transform: translateY(-5px); }
+        .product-image { height: 300px; background: #111; display: flex; align-items: center; justify-content: center; overflow: hidden; }
+        .product-image img { width: 100%; height: 100%; object-fit: cover; }
+        .product-info { padding: 20px; }
+        .product-price { color: var(--accent); font-size: 1.4rem; font-weight: 800; margin: 10px 0; }
+
+        .wa-btn { background: var(--whatsapp); color: white; border: none; padding: 12px; width: 100%; border-radius: 10px; font-weight: bold; cursor: pointer; text-decoration: none; display: inline-block; text-align: center; }
+
+        /* AI Chatbot Styles */
+        #chat-window { position: fixed; bottom: 90px; right: 20px; width: 350px; height: 450px; background: var(--bg-card); border: 1px solid var(--border); border-radius: 15px; display: none; flex-direction: column; z-index: 2000; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+        #chat-header { background: var(--accent); color: black; padding: 15px; font-weight: bold; border-radius: 15px 15px 0 0; }
+        #chat-messages { flex-grow: 1; padding: 15px; overflow-y: auto; font-size: 0.9rem; }
+        .chat-input-area { padding: 10px; border-top: 1px solid var(--border); display: flex; gap: 5px; }
+        .chat-input-area input { flex-grow: 1; background: #000; border: 1px solid var(--border); color: white; padding: 10px; border-radius: 5px; }
+        
+        #chat-toggle { position: fixed; bottom: 20px; right: 20px; width: 60px; height: 60px; background: var(--accent); border-radius: 50%; border: none; cursor: pointer; font-size: 24px; z-index: 2000; }
+
+        /* Admin Panel Overlay */
+        .admin-panel { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.95); z-index: 3000; align-items: center; justify-content: center; }
+        .admin-content { background: var(--bg-card); padding: 40px; border-radius: 20px; width: 90%; max-width: 450px; border: 1px solid var(--accent); }
+        .admin-content input { width: 100%; padding: 12px; margin: 10px 0; background: #000; border: 1px solid var(--border); color: white; border-radius: 5px; }
+
+        .skeleton { background: linear-gradient(90deg, #1a1a1a 25%, #252525 50%, #1a1a1a 75%); background-size: 200% 100%; animation: loading 1.5s infinite; }
+        @keyframes loading { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="nav-container">
+            <div class="logo">සිරි සාරි Studio</div>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="hero-content">
+            <h1>සිරි සාරි Collection</h1>
+            <p>Premium sarees managed by AI & Google Sheets</p>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="products-grid" id="productGrid">
+            <div class="product-card"><div class="product-image skeleton"></div></div>
+            <div class="product-card"><div class="product-image skeleton"></div></div>
+        </div>
+    </section>
+
+    <button id="chat-toggle">💬</button>
+    <div id="chat-window">
+        <div id="chat-header">සිරි සාරි AI සහායක</div>
+        <div id="chat-messages"></div>
+        <div class="chat-input-area">
+            <input type="text" id="chat-input" placeholder="ප්‍රශ්නය අසන්න...">
+            <button onclick="askAI()" style="background: var(--accent); border:none; padding:10px; cursor:pointer; border-radius:5px;">Send</button>
+        </div>
+    </div>
+
+    <div class="admin-panel" id="adminPanel">
+        <div class="admin-content">
+            <h2 style="color: var(--accent);">⚙️ පද්ධති සැකසුම්</h2>
+            <label>Gemini API Key:</label>
+            <input type="text" id="apiKeyInput">
+            <label>WhatsApp (94xxxxxxxx):</label>
+            <input type="text" id="waNumInput">
+            <label>Google Sheet CSV URL:</label>
+            <input type="text" id="sheetUrlInput">
+            <button onclick="saveSettings()" style="background: var(--accent); border:none; padding:12px; width:100%; border-radius:5px; font-weight:bold; cursor:pointer;">Save & Reload</button>
+            <p style="text-align:center; margin-top:10px; color:gray; cursor:pointer;" onclick="closeAdmin()">Cancel</p>
+        </div>
+    </div>
+
+    <script>
+        const ADMIN_PASS = "Siri@123";
+
+        // Secret Admin Access
+        document.addEventListener('keydown', (e) => {
+            if (e.ctrlKey && e.shiftKey && e.code === 'KeyA') {
+                const p = prompt("Enter Admin Password:");
+                if (p === ADMIN_PASS) {
+                    document.getElementById('adminPanel').style.display = 'flex';
+                    document.getElementById('apiKeyInput').value = localStorage.getItem('siri_api_key') || '';
+                    document.getElementById('waNumInput').value = localStorage.getItem('siri_wa') || '';
+                    document.getElementById('sheetUrlInput').value = localStorage.getItem('siri_sheet') || '';
+                }
+            }
+        });
+
+        function closeAdmin() { document.getElementById('adminPanel').style.display = 'none'; }
+
+        function saveSettings() {
+            localStorage.setItem('siri_api_key', document.getElementById('apiKeyInput').value);
+            localStorage.setItem('siri_wa', document.getElementById('waNumInput').value);
+            localStorage.setItem('siri_sheet', document.getElementById('sheetUrlInput').value);
+            location.reload();
         }
 
-        /* Header */
-        header {
-            position: fixed; top: 0; width: 100%;
-            background: rgba(10, 10, 10, 0.8);
-            backdrop-filter: blur(20px);
-            border-bottom: 1px solid var(--border);
-            z-index: 1000; transition: all 0.3s;
+        // Load Products from Sheet
+        async function loadProducts() {
+            const url = localStorage.getItem('siri_sheet');
+            const grid = document.getElementById('productGrid');
+            if (!url) { grid.innerHTML = "Setup required. Press Ctrl+Shift+A"; return; }
+
+            try {
+                const res = await fetch(url);
+                const csv = await res.text();
+                const rows = csv.split('\n').slice(1);
+                grid.innerHTML = '';
+
+                rows.forEach(row => {
+                    const cols = row.split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/);
+                    if (cols.length < 3) return;
+                    const name = cols[0].replace(/"/g, '');
+                    const price = cols[2];
+                    const img = cols[5]?.trim();
+                    const msg = encodeURIComponent(`සාරිය: ${name}\nමිල: ${price}\nමෙය ඇණවුම් කිරීමට කැමතියි.`);
+
+                    grid.innerHTML += `
+                        <div class="product-card">
+                            <div class="product-image">${img ? `<img src="${img}">` : '🛍️'}</div>
+                            <div class="product-info">
+                                <h3>${name}</h3>
+                                <div class="product-price">රු. ${price}</div>
+                                <a href="https://wa.me/${localStorage.getItem('siri_wa')}?text=${msg}" class="wa-btn">WhatsApp Order</a>
+                            </div>
+                        </div>`;
+                });
+            } catch (e) { grid.innerHTML = "Error loading products."; }
         }
-        .nav-container {
-            max-width: 1400px; margin: 0 auto; padding: 20px 5%;
-            display: flex; justify-content: space-between; align-items: center;
+
+        // Chatbot Logic
+        const chatToggle = document.getElementById('chat-toggle');
+        const chatWindow = document.getElementById('chat-window');
+        chatToggle.onclick = () => chatWindow.style.display = chatWindow.style.display === 'flex' ? 'none' : 'flex';
+
+        async function askAI() {
+            const input = document.getElementById('chat-input');
+            const msgBox = document.getElementById('chat-messages');
+            const apiKey = localStorage.getItem('siri_api_key');
+            if (!apiKey) { alert("AI API Key not set!"); return; }
+
+            const userMsg = input.value;
+            msgBox.innerHTML += `<div style="text-align:right; margin-bottom:10px;"><span style="background:var(--accent); color:black; padding:8px; border-radius:8px;">${userMsg}</span></div>`;
+            input.value = '';
+
+            try {
+                const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ contents: [{ parts: [{ text: `You are an assistant for Siri Saree Studio. Answer in Sinhala: ${userMsg}` }] }] })
+                });
+                const data = await res.json();
+                const reply = data.candidates[0].content.parts[0].text;
+                msgBox.innerHTML += `<div style="margin-bottom:10px;"><span style="background:#333; padding:8px; border-radius:8px;">${reply}</span></div>`;
+                msgBox.scrollTop = msgBox.scrollHeight;
+            } catch (e) { msgBox.innerHTML += `<div>Error connecting to AI.</div>`; }
         }
-        .logo { font-size: 1.5rem; font-weight: 80
+
+        window.onload = loadProducts;
+    </script>
+</body>
+</html>
