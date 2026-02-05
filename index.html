@@ -28,6 +28,7 @@
             color: var(--text-primary);
             line-height: 1.6;
             overflow-x: hidden;
+            scroll-behavior: smooth;
         }
 
         /* Header */
@@ -468,7 +469,7 @@
             <h1>AI-Powered සාරි Shopping Experience</h1>
             <p>Google Sheets වලින් manage කරන, modern technology සමග විශ්වාසදායී සාරි එකතුව</p>
             <div class="hero-buttons">
-                <button class="cta-btn" onclick="document.getElementById('products').scrollIntoView({behavior:'smooth'})">
+                <button class="cta-btn" onclick="scrollToSection('products')">
                     Explore Collection
                 </button>
                 <button class="cta-btn" style="background: transparent; border: 2px solid var(--accent); color: var(--accent);" onclick="openAdmin()">
@@ -523,6 +524,18 @@
         </div>
     </section>
 
+    <!-- About Section -->
+    <section class="section" id="about">
+        <h2 class="section-title">About Us</h2>
+        <div style="max-width: 800px; margin: 0 auto; text-align: center;">
+            <p style="font-size: 1.2rem; color: var(--text-secondary); line-height: 1.8;">
+                සිරි සාරි Studio is a modern e-commerce platform that combines traditional Sri Lankan elegance 
+                with cutting-edge technology. We use Google Sheets integration to provide real-time product 
+                management and seamless shopping experience.
+            </p>
+        </div>
+    </section>
+
     <!-- Footer -->
     <footer>
         <div class="footer-content">
@@ -562,7 +575,7 @@
     <div class="admin-panel" id="adminPanel">
         <div class="admin-content">
             <div class="admin-header">
-                <h2>Admin Panel</h2>
+                <h2>📊 Admin Panel</h2>
                 <button class="close-btn" onclick="closeAdmin()">✕ Close</button>
             </div>
 
@@ -593,6 +606,36 @@
         // Header scroll effect
         window.addEventListener('scroll', () => {
             document.getElementById('header').classList.toggle('scrolled', window.scrollY > 50);
+        });
+
+        // Smooth scroll function
+        function scrollToSection(sectionId) {
+            const element = document.getElementById(sectionId);
+            if (element) {
+                element.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+            }
+        }
+
+        // Smooth scroll for all navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href').substring(1);
+                const targetElement = document.getElementById(targetId);
+                
+                if (targetElement) {
+                    targetElement.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                    
+                    // Close admin panel if open
+                    closeAdmin();
+                }
+            });
         });
 
         // Admin functions
@@ -700,6 +743,7 @@
             }
         });
 
+        // Close admin panel on Escape key
         document.addEventListener('keydown', (e) => {
             if (e.key === 'Escape') closeAdmin();
         });
